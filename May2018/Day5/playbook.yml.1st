@@ -1,0 +1,9 @@
+---
+
+- name: play book makes use of our custom nginx ROLE
+  hosts: all
+  roles:
+    - nginx
+  
+
+...

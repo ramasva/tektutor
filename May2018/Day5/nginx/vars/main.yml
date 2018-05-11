@@ -1,0 +1,8 @@
+---
+
+# vars file for nginx
+
+organization_name: Verizon
+created_by: Vaidyanathan Ramasubramanian
+greet_message: You can !!! Well try !
+

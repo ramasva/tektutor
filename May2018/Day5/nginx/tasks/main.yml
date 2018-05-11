@@ -1,0 +1,12 @@
+---
+# tasks file for nginx OLD method. The new method is import_tasks
+#- include: install.yml
+#- include: createwebrootfolder.yml
+#- include: configure.yml
+#- include: deploy.yml
+
+
+- import_tasks: install.yml
+- import_tasks: createwebrootfolder.yml
+- import_tasks: configure.yml
+- import_tasks: deploy.yml

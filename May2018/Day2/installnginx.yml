@@ -1,0 +1,34 @@
+- name: Install NGINX and configure and deploy webpage into nginx web sevrer
+  hosts: all
+  become: yes
+  gather_facts: yes
+  vars:
+    - organization_name: Verizon India
+    - provisioner_name: Docker Auto
+    - automation_tool: Ansible 
+
+  tasks:
+    - name: Install nginx web server
+      apt: name=nginx state=present update_cache=yes
+
+    - name: Configure the nginx web root home
+      copy: src=default dest=/etc/nginx/sites-available/default
+      notify:
+        - Restart the Nginx server
+ 
+    - name: Configure the nginx settings
+      copy: src=nginx.conf dest=/etc/nginx/nginx.conf
+      notify:
+        - Restart the Nginx server
+
+    - name: Create Nginx web folder
+      shell: "mkdir -p /var/html"
+      notify:
+        - Restart the Nginx server
+
+    - name: Deploy the web page we are using Jinja 2 to create this index file with variables
+      template: src=index.html.j2 dest=/var/html/index.html
+
+  handlers:
+    - name: Restart the Nginx server
+      shell: "service nginx restart"

@@ -1,0 +1,30 @@
+---
+- import_playbook: start_ubuntu_containers.yml
+- import_playbook: start_centos_containers.yml
+
+- name: play book makes use of our custom nginx ROLE
+  hosts: all
+  vars:
+    task_status: not_running
+  roles:
+    - nginx
+  
+  pre_tasks:
+    - debug: msg="This is a pre tasks section"
+
+  tasks:
+    - name: Set the tasks to running
+      set_fact:
+        task_status: running
+    - name: Print the above status
+      debug: var=task_status
+
+
+  post_tasks:
+  - debug: msg="This is the post tasks section"
+
+...
+
+
+
+

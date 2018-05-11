@@ -1,0 +1,12 @@
+---
+- name: Install Nginx in ubuntu
+  apt: name=nginx state=present update_cache=yes
+  when: ( ansible_distribution == "Ubuntu" and ansible_os_family == "Debian" )
+
+- name: Install epel-release in Centos
+  apt: name=epel-release state=latest 
+  when: ( ansible_distribution == "CentOS" and ansible_os_family == "RedHat" )
+
+- name: Install Nginx in Centos
+  apt: name=nginx state=present update_cache=yes
+  when: ( ansible_distribution == "CentOS" and ansible_os_family == "RedHat" )

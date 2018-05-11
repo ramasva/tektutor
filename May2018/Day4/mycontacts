@@ -1,0 +1,9 @@
+my_contacts:
+  member1:
+    name: member1
+    mobile: 12345
+
+  member2:
+    name: member2
+    mobile: 67890
+ 

@@ -1,0 +1,20 @@
+---
+
+- name: This is a smaple playbook for ping module
+  hosts: all
+  
+  tasks:
+    - name: ping the remote docker 
+      ping: 
+
+
+- name: This is the second play for cont3 alone
+  hosts: cont3 
+  tasks:
+    - name: Lists the files in the root folder
+      shell: "ls -lr /"
+      register: output
+
+    - name: Print the output
+      debug: var=output
+...

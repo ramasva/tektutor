@@ -1,0 +1,34 @@
+- name: Demonstrates spinning up[ new containers through playbook
+  hosts: localhost
+  tasks: 
+    - name: Start new ubuntu images
+      docker_container: 
+        image: "ubuntussh"
+        name: "ubuntu{{item}}"
+        state: started
+        ports:
+          - "200{{item}}:22"
+          - "800{{item}}:80"
+
+      with_sequence: start=1 end=2
+
+      
+    - name: Start new ubuntu images
+      docker_container: 
+        image: "centosssh"
+        name: "centosssh{{item}}"
+        state: started
+        ports:
+          - "300{{item}}:22"
+          - "900{{item}}:80"
+      with_sequence: start=1 end=2
+
+
+- name: Ping the new containers
+  hosts: all
+  tasks:
+    - ping: 
+      register: output
+
+    - name: Print the output
+      debug: var=output

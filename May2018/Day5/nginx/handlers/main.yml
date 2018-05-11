@@ -1,0 +1,13 @@
+---
+# handlers file for nginx
+
+- name: Restart the nginx server in ubuntu
+  command: service nginx restart
+
+
+- name: Restart the nginx server in centos
+  command: service nginx restart
+
+
+
+

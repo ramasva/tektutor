@@ -1,0 +1,19 @@
+- name: This playbook will install vim and tree in the target server
+  hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Install tree utility
+      apt: name=tree update_cache=yes state=latest
+      register: vimtree
+
+    - name: print the output
+      debug: var=vimtree
+
+
+    - name: Install Vim utility
+      apt: name=vim update_cache=yes state=latest
+      register: trees
+
+    - name: print
+      debug: var=trees

@@ -1,0 +1,52 @@
+- name: This is a sample playbook
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  vars: 
+    organization_name: verizon India
+    created_by: vaidhy
+    greet_message: Hello Devops!
+
+  tasks:
+    - name: Install epel-release server in centos 
+      yum: name=epel-release state=present
+      when: (ansible_distribution=="CentOS" and ansible_os_family=="RedHat")  
+
+    - name: Install nginx server in centos 
+      yum: name=nginx state=present
+      when: (ansible_distribution=="CentOS" and ansible_os_family=="RedHat")  
+
+    - name: Install nginx server in ubuntu 
+      apt: name=nginx state=present update_cache=yes
+      when: (ansible_distribution=="Ubuntu" and ansible_os_family=="Debian")
+
+    - name: create webroot folder
+      shell: "mkdir -p /var/html"
+   
+    - name: change webroot permission
+      shell: "chmod 777 /var/html"
+
+    - name: Configure default webroot in the ubuntu server
+      copy: src=default_ubuntu.conf dest=/etc/nginx/sites-available/default
+      when: (ansible_distribution=="Ubuntu" and ansible_os_family=="Debian")
+      notify:
+        - Restart nginx Ubuntu
+   
+    - name: Configure default webroot in the centos
+      copy: src=default_centos.conf dest=/etc/nginx/conf.d/default.conf
+      when: (ansible_distribution=="CentOS" and ansible_os_family=="RedHat")
+      notify:
+        - Restart nginx CentOS
+
+    - name: Deploy the webpage
+      template: src=index.html dest=/var/html/
+      notify:
+        - Restart nginx CentOS
+
+  handlers:
+    - name: Restart nginx Ubuntu
+      shell: "/etc/init.d/nginx restart"
+
+    - name: Restart nginx CentOS
+      service: name=nginx state=restarted   

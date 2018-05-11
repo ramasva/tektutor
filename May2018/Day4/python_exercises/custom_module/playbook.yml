@@ -1,0 +1,10 @@
+- name: Demonstrates the custom ansible add module
+  hosts: localhost
+  tasks:
+    - name: add two numbers from the custom module
+      add: firstInput=100 secondInput=1000
+      register: output
+
+
+    - name: print the output
+      debug: var=output  

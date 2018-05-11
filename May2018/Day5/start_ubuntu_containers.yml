@@ -1,0 +1,12 @@
+- name: Start the ubuntu containers
+  hosts: localhost
+  tasks:
+  - name: Start the Ubuntu containers
+    docker_container:
+      image: tektutor/ansible-ubuntu
+      state: present
+      name: "ubuntuNew{{item}}" 
+      ports:
+        - "220{{item}}:22"
+        - "820{{item}}:80"
+    with_sequence: start=1 end=2  
